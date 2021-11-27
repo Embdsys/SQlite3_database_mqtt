@@ -1,5 +1,6 @@
 # subscriber.py
 import paho.mqtt.client as mqtt
+import Data_database
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
@@ -7,13 +8,12 @@ def on_connect(client, userdata, flags, rc):
     # if reconnect after losing the connection with the broker, it will continue to subscribe to the raspberry/topic topic
     client.subscribe("raspberry/topic")
 
-def send_message(topic,message):
-    # the four parameters are topic, sending content, QoS and whether retaining the message respectively
-    client.publish(topic, payload= message, qos=0, retain=False)
-
 # the callback function, it will be triggered when receiving messages
 def on_message(client, userdata, msg):
     print(f"{msg.topic} {msg.payload}")
+    #Filter messages by topic and return payload
+    if msg.topic == "TEMP-1":
+        return Data_database.log_data("20-2-11","TEMP-1","97%","400")
 
 def start_comm():
     client = mqtt.Client()
@@ -24,7 +24,10 @@ def start_comm():
     client.will_set('raspberry/status', b'{"status": "Off"}')
 
     # create connection, the three parameters are broker address, broker port number, and keep-alive time respectively
-    client.connect("broker.emqx.io", 1883, 60)
+    client.connect("192.168.0.29", 1883, 60)
 
     # set the network loop blocking, it will not actively end the program before calling disconnect() or the program crash
     client.loop_forever()
+
+if __name__ == "__main__":
+    start_comm()

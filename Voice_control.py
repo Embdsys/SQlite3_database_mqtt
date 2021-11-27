@@ -15,7 +15,7 @@ engine.setProperty('volume',1.0)    # setting up volume level  between 0 and 1
 voices = engine.getProperty('voices')       #getting details of current voice
 #engine.setProperty('voice', voices[0].id)  #changing index, changes voices. o for male
 engine.setProperty('voice', voices[1].id)   #changing index, changes voices. 1 for female
-print("sanity chec!")
+#print("sanity chec!")
 def say(message):
     """message must be string"""
     engine.say(f"{message}")
