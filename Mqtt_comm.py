@@ -1,20 +1,27 @@
 # subscriber.py
 import paho.mqtt.client as mqtt
 import Data_database
+import CSV_handler as ch
+from datetime import datetime
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # subscribe, which need to put into on_connect
     # if reconnect after losing the connection with the broker, it will continue to subscribe to the raspberry/topic topic
-    client.subscribe("TEMP-1")
+    device_data = ch.showDevices()
+    device_topics = device_data.Topic_pub
+    for i in device_topics:
+        client.subscribe(i)
+        print(f"Subscribed to : {i}")
 
 # the callback function, it will be triggered when receiving messages
 def on_message(client, userdata, msg):
     print(f"{msg.topic} {msg.payload}")
-    #Filter messages by topic and return payload
-    if msg.topic == "TEMP-1":
-        #return print ('Got mail!!!')
-        return Data_database.log_data("20-2-11","TEMP-1","97%","400")
+    #Filter messages by topic and return payload into db
+    if "TEMP" in msg.topic:
+        now = datetime.now()
+        dt_string = now.strftime("%d:%m:%Y:%H:%M:%S")
+        return Data_database.log_data(dt_string,msg.topic,"97%",msg.payload)
 
 def start_comm():
     client = mqtt.Client()

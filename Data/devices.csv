@@ -1,0 +1,5 @@
+Type_of_device,Device_ID,Topic_sub,Topic_pub
+TEMP,1,config1,TEMP-1
+TEMP,2,config2,TEMP-2
+TEMP,3,config3,TEMP-3
+TEMP,4,config4,TEMP-4

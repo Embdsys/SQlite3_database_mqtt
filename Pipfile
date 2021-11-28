@@ -7,6 +7,7 @@ name = "pypi"
 numpy = "*"
 paho-mqtt = "*"
 pyttsx3 = "*"
+pandas = "*"
 
 [dev-packages]
 
