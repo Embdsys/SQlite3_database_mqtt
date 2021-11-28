@@ -17,7 +17,7 @@ Error_code  Common cause    Description
     *These don't make the box reset but are warnings
 """
 def log_error(date, uuid, board_model, error_code):
-    con = sqlite3.connect('logs.db')
+    con = sqlite3.connect('Data/logs.db')
     cur = con.cursor()
 
     try:

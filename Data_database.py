@@ -1,7 +1,7 @@
 import sqlite3
 
 def log_data(date, uuid, humidity, temperature):
-    con = sqlite3.connect('data.db')
+    con = sqlite3.connect('Data/data.db')
     cur = con.cursor()
 
     try:

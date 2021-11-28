@@ -6,13 +6,14 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # subscribe, which need to put into on_connect
     # if reconnect after losing the connection with the broker, it will continue to subscribe to the raspberry/topic topic
-    client.subscribe("raspberry/topic")
+    client.subscribe("TEMP-1")
 
 # the callback function, it will be triggered when receiving messages
 def on_message(client, userdata, msg):
     print(f"{msg.topic} {msg.payload}")
     #Filter messages by topic and return payload
     if msg.topic == "TEMP-1":
+        #return print ('Got mail!!!')
         return Data_database.log_data("20-2-11","TEMP-1","97%","400")
 
 def start_comm():
@@ -31,3 +32,5 @@ def start_comm():
 
 if __name__ == "__main__":
     start_comm()
+
+#start_comm()
