@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):
     if "TEMP" in msg.topic:
         now = datetime.now()
         dt_string = now.strftime("%d:%m:%Y:%H:%M:%S")
-        return Data_database.log_data(dt_string,msg.topic,"97%",msg.payload)
+        return Data_database.log_data(dt_string,msg.topic,msg.payload)
 
 def start_comm():
     client = mqtt.Client()
@@ -29,7 +29,7 @@ def start_comm():
     client.on_message = on_message
 
     # set the will message, when the Raspberry Pi is powered off, or the network is interrupted abnormally, it will send the will message to other clients
-    client.will_set('raspberry/status', b'{"status": "Off"}')
+    client.will_set('error', b'{"status": "Off"}')
 
     # create connection, the three parameters are broker address, broker port number, and keep-alive time respectively
     client.connect("192.168.0.29", 1883, 60)
